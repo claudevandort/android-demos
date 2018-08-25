@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -38,11 +39,17 @@ public class PhoneCallActivity extends AppCompatActivity {
                         oldCallRequestPermissions();
                     } else {
                         // For devices using android Marshmallow or newer
-                        requestPermissions(new String[]{Manifest.permission.CALL_PHONE}, PHONE_CALL_CODE);
+                        if(checkPermissions(Manifest.permission.CALL_PHONE)){
+                            // user already said yes
+                            callIntent();
+                        }
+                        else{
+                            requestPermissions(new String[]{Manifest.permission.CALL_PHONE}, PHONE_CALL_CODE);
+                        }
                     }
                 }
                 else{
-                    Toast.makeText(PhoneCallActivity.this, "Input a phone number first", Toast.LENGTH_LONG).show();
+                    Toast.makeText(PhoneCallActivity.this, "Input a phone number before calling", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -76,8 +83,7 @@ public class PhoneCallActivity extends AppCompatActivity {
     }
 
     public void callIntent(){
-        if (ActivityCompat.checkSelfPermission(PhoneCallActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED)
-            return;
+        if (ActivityCompat.checkSelfPermission(PhoneCallActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) return;
         Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phoneNumber));
         startActivity(intent);
     }
