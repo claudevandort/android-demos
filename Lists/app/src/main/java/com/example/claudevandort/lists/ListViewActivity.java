@@ -3,8 +3,10 @@ package com.example.claudevandort.lists;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -30,13 +32,14 @@ public class ListViewActivity extends AppCompatActivity {
         names.add("Max");
         names.add("Roderick");
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(ListViewActivity.this, android.R.layout.simple_list_item_1, names);
+        //ArrayAdapter<String> adapter = new ArrayAdapter<>(ListViewActivity.this, android.R.layout.simple_list_item_1, names);
+        MyAdapter adapter = new MyAdapter(ListViewActivity.this, R.layout.list_item, names);
 
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(ListViewActivity.this, "Clicked: " + names.get(position), Toast.LENGTH_LONG).show();
+                Toast.makeText(ListViewActivity.this, "Clicked: " + names.get(position), Toast.LENGTH_SHORT).show();
             }
         });
     }
