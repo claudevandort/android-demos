@@ -16,7 +16,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
-    private Button buttonMainCall;
+    private Button buttonMainCall, buttonMainWeb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,10 +24,20 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         buttonMainCall = findViewById(R.id.button_main_call);
+        buttonMainWeb = findViewById(R.id.button_main_web);
+
         buttonMainCall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, PhoneCallActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        buttonMainWeb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, WebActivity.class);
                 startActivity(intent);
             }
         });

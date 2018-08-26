@@ -12,4 +12,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/phone_call"/>
+
+    <Button
+        android:id="@+id/button_main_web"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/web"
+        app:layout_constraintTop_toBottomOf="@+id/button_main_call" />
 </android.support.constraint.ConstraintLayout>
