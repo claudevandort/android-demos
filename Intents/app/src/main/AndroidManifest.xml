@@ -19,7 +19,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".PhoneCallActivity" />
-        <activity android:name=".WebActivity"></activity>
+        <activity android:name=".WebActivity" />
+        <activity android:name=".CameraActivity"></activity>
     </application>
 
 </manifest>

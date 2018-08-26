@@ -16,7 +16,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
-    private Button buttonMainCall, buttonMainWeb;
+    private Button buttonMainCall, buttonMainWeb, buttonMainCamera;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
         buttonMainCall = findViewById(R.id.button_main_call);
         buttonMainWeb = findViewById(R.id.button_main_web);
+        buttonMainCamera = findViewById(R.id.button_main_camera);
 
         buttonMainCall.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,6 +39,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, WebActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        buttonMainCamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, CameraActivity.class);
                 startActivity(intent);
             }
         });
