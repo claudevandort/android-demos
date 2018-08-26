@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
         items = new ArrayList<>();
         items.add("ListView");
+        items.add("GridView");
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, items);
 
@@ -34,6 +35,10 @@ public class MainActivity extends AppCompatActivity {
                 switch (position){
                     case 0:
                         i.setClass(MainActivity.this, ListViewActivity.class);
+                        startActivity(i);
+                        break;
+                    case 1:
+                        i.setClass(MainActivity.this, GridViewActivity.class);
                         startActivity(i);
                         break;
                 }
