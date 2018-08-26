@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
         items = new ArrayList<>();
         items.add("ListView");
         items.add("GridView");
+        items.add("RecyclerView");
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, items);
 
@@ -39,6 +40,10 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case 1:
                         i.setClass(MainActivity.this, GridViewActivity.class);
+                        startActivity(i);
+                        break;
+                    case 2:
+                        i.setClass(MainActivity.this, RecyclerViewActivity.class);
                         startActivity(i);
                         break;
                 }
