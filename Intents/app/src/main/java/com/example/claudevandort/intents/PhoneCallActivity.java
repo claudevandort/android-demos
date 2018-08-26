@@ -25,6 +25,8 @@ public class PhoneCallActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_phone_call);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         editTextPhoneNumber = findViewById(R.id.edit_text_phone_number);
         buttonPhoneNuber = findViewById(R.id.button_phone_number);
         buttonPhoneNuber.setOnClickListener(new View.OnClickListener() {

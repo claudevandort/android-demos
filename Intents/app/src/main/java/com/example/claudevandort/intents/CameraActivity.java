@@ -18,6 +18,8 @@ public class CameraActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         buttonCameraShoot = findViewById(R.id.button_camera_shoot);
         buttonCameraShoot.setOnClickListener(new View.OnClickListener() {
             @Override

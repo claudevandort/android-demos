@@ -18,6 +18,8 @@ public class WebActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         editTextWebAddress = findViewById(R.id.edit_text_web_address);
         buttonWebAddress = findViewById(R.id.button_web_address);
         buttonWebAddress.setOnClickListener(new View.OnClickListener() {
