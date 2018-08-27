@@ -43,7 +43,7 @@ public class RecyclerViewActivity extends AppCompatActivity {
             }
         });
 
-        mRecyclerview.hasFixedSize(true);
+        mRecyclerview.setHasFixedSize(true);
         mRecyclerview.setItemAnimator(new DefaultItemAnimator());
         mRecyclerview.setLayoutManager(mLayoutManager);
         mRecyclerview.setAdapter(mAdapter);
