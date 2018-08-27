@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
         items.add("ListView");
         items.add("GridView");
         items.add("RecyclerView");
+        items.add("Movies (Recycler+CardView)");
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, items);
 
@@ -32,22 +33,25 @@ public class MainActivity extends AppCompatActivity {
         mainListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent i = new Intent();
                 switch (position){
                     case 0:
-                        i.setClass(MainActivity.this, ListViewActivity.class);
-                        startActivity(i);
+                        goToActivity(ListViewActivity.class);
                         break;
                     case 1:
-                        i.setClass(MainActivity.this, GridViewActivity.class);
-                        startActivity(i);
+                        goToActivity(GridViewActivity.class);
                         break;
                     case 2:
-                        i.setClass(MainActivity.this, RecyclerViewActivity.class);
-                        startActivity(i);
+                        goToActivity(RecyclerViewActivity.class);
+                        break;
+                    case 3:
+                        goToActivity(MoviesActivity.class);
                         break;
                 }
             }
         });
+    }
+
+    private void goToActivity(Class<?> target){
+        startActivity(new Intent(MainActivity.this, target));
     }
 }
