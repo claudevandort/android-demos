@@ -37,6 +37,7 @@ public class MoviesActivity extends AppCompatActivity {
             @Override
             public void onItemClick(Movie movie, int position) {
                 Toast.makeText(MoviesActivity.this, "Deleted " + movie.getName(), Toast.LENGTH_SHORT).show();
+                deleteMovie(position);
             }
         });
 
@@ -56,7 +57,7 @@ public class MoviesActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.add_item_menu_option:
-                this.addName(0);
+                this.addMovie(0);
                 break;
             default:
                 return super.onOptionsItemSelected(item);
@@ -64,13 +65,13 @@ public class MoviesActivity extends AppCompatActivity {
         return true;
     }
 
-    private void addName(int position){
-        movies.add(position, new Movie("New item " + (movies.size()+1), 0));
+    private void addMovie(int position){
+        movies.add(position, new Movie("New movie " + (movies.size()+1), R.drawable.no_image));
         mAdapter.notifyItemInserted(position);
         mLayoutManager.scrollToPosition(position);
     }
 
-    private void deleteName(int position){
+    private void deleteMovie(int position){
         movies.remove(position);
         mAdapter.notifyItemRemoved(position);
     }
