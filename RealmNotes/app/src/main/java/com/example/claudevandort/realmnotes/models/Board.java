@@ -18,6 +18,8 @@ public class Board extends RealmObject {
     private Date createdAt;
     private RealmList<Note> notes;
 
+    public Board(){}
+
     public Board(String title) {
         this.id = RealmNotesApplication.BoardID.incrementAndGet();
         this.title = title;

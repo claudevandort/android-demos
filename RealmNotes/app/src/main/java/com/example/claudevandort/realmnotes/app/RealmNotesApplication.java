@@ -8,6 +8,7 @@ import com.example.claudevandort.realmnotes.models.Note;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import io.realm.RealmObject;
 import io.realm.RealmResults;
 
@@ -19,10 +20,18 @@ public class RealmNotesApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
+        setupRealm();
         Realm realm = Realm.getDefaultInstance();
         BoardID = getIdByTable(realm, Board.class);
         NoteID = getIdByTable(realm, Note.class);
         realm.close();
+    }
+
+    private void setupRealm(){
+        RealmConfiguration config = new RealmConfiguration
+                .Builder()
+                .deleteRealmIfMigrationNeeded()
+                .build();
     }
 
     private <T extends RealmObject> AtomicInteger getIdByTable(Realm realm, Class<T> anyClass){
