@@ -18,8 +18,6 @@ public class RealmNotesApplication extends Application {
 
     @Override
     public void onCreate() {
-        super.onCreate();
-
         setupRealm();
         Realm realm = Realm.getDefaultInstance();
         BoardID = getIdByTable(realm, Board.class);
@@ -28,10 +26,12 @@ public class RealmNotesApplication extends Application {
     }
 
     private void setupRealm(){
+        Realm.init(getApplicationContext());
         RealmConfiguration config = new RealmConfiguration
                 .Builder()
                 .deleteRealmIfMigrationNeeded()
                 .build();
+        Realm.setDefaultConfiguration(config);
     }
 
     private <T extends RealmObject> AtomicInteger getIdByTable(Realm realm, Class<T> anyClass){

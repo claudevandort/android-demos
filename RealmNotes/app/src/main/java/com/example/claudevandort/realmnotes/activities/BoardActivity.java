@@ -11,8 +11,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.claudevandort.realmnotes.R;
+import com.example.claudevandort.realmnotes.models.Board;
+
+import io.realm.Realm;
 
 public class BoardActivity extends AppCompatActivity {
+    private Realm realm;
     private FloatingActionButton fab;
 
     @Override
@@ -20,8 +24,9 @@ public class BoardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_board);
 
-        fab = findViewById(R.id.fab_add_board);
+        realm = Realm.getDefaultInstance();
 
+        fab = findViewById(R.id.fab_add_board);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -30,6 +35,14 @@ public class BoardActivity extends AppCompatActivity {
         });
     }
 
+    private void createBoard(String boardName){
+        Board board = new Board(boardName);
+        realm.beginTransaction();
+        realm.copyToRealm(board);
+        realm.commitTransaction();
+    }
+
+    // Dialogs
     private void newBoardDialog(String title, String message){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         if(title != null) builder.setTitle(title);
@@ -44,7 +57,8 @@ public class BoardActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 String boardName = input.getText().toString().trim();
                 if(boardName.length() > 0){
-                    Toast.makeText(getApplicationContext(), "Create board!", Toast.LENGTH_SHORT).show();
+                    createBoard(boardName);
+                    Toast.makeText(getApplicationContext(), boardName + " board created", Toast.LENGTH_SHORT).show();
                 }
                 else{
                     Toast.makeText(getApplicationContext(), "Board name required", Toast.LENGTH_SHORT).show();
