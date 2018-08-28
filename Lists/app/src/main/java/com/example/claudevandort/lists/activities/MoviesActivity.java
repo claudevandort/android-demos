@@ -1,4 +1,4 @@
-package com.example.claudevandort.lists;
+package com.example.claudevandort.lists.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,11 +9,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.example.claudevandort.lists.models.Movie;
+import com.example.claudevandort.lists.adapters.MoviesAdapter;
+import com.example.claudevandort.lists.R;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecyclerViewActivity extends AppCompatActivity {
-    private List<String> names;
+public class MoviesActivity extends AppCompatActivity {
+    private List<Movie> movies;
     private RecyclerView mRecyclerview;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -21,25 +25,23 @@ public class RecyclerViewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_recycler_view);
+        setContentView(R.layout.activity_movies);
 
-        names = new ArrayList<String>(){{
-            add("Claudio");
-            add("Abel");
-            add("Alvaro");
-            add("Nico");
-            add("Joe");
-            add("Max");
-            add("Roderick");
+        movies = new ArrayList<Movie>(){{
+            add(new Movie("Beautiful Mind", R.drawable.beautiful_mind));
+            add(new Movie("Corpse Bride", R.drawable.corpse_bride));
+            add(new Movie("Ready Player One", R.drawable.ready_player_one));
+            add(new Movie("Spiderman", R.drawable.spiderman));
+            add(new Movie("Tron Legacy", R.drawable.tron));
         }};
 
-        mRecyclerview = findViewById(R.id.recycler_view);
+        mRecyclerview = findViewById(R.id.movies_recycler_view);
         mLayoutManager = new LinearLayoutManager(this);
-        mAdapter = new MyRecyclerAdapter(names, R.layout.recycler_view_item, new MyRecyclerAdapter.OnItemClickListener() {
+        mAdapter = new MoviesAdapter(movies, R.layout.movie_recycler_view_item, new MoviesAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(String name, int position) {
-                Toast.makeText(RecyclerViewActivity.this, "Deleted " + name, Toast.LENGTH_SHORT).show();
-                deleteName(position);
+            public void onItemClick(Movie movie, int position) {
+                Toast.makeText(MoviesActivity.this, "Deleted " + movie.getName(), Toast.LENGTH_SHORT).show();
+                deleteMovie(position);
             }
         });
 
@@ -59,7 +61,7 @@ public class RecyclerViewActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.add_item_menu_option:
-                this.addName(0);
+                this.addMovie(0);
                 break;
             default:
                 return super.onOptionsItemSelected(item);
@@ -67,14 +69,14 @@ public class RecyclerViewActivity extends AppCompatActivity {
         return true;
     }
 
-    private void addName(int position){
-        names.add(position, "New item " + (names.size()+1));
+    private void addMovie(int position){
+        movies.add(position, new Movie("New movie " + (movies.size()+1), R.drawable.no_image));
         mAdapter.notifyItemInserted(position);
         mLayoutManager.scrollToPosition(position);
     }
 
-    private void deleteName(int position){
-        names.remove(position);
+    private void deleteMovie(int position){
+        movies.remove(position);
         mAdapter.notifyItemRemoved(position);
     }
 }

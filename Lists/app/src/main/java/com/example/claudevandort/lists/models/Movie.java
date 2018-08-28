@@ -1,4 +1,4 @@
-package com.example.claudevandort.lists;
+package com.example.claudevandort.lists.models;
 
 public class Movie {
     private String name;
