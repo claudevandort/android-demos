@@ -1,5 +1,7 @@
 package com.example.claudevandort.realmnotes.models;
 
+import com.example.claudevandort.realmnotes.app.RealmNotesApplication;
+
 import java.util.Date;
 
 import io.realm.RealmObject;
@@ -17,7 +19,7 @@ public class Note extends RealmObject {
     public Note(){}
 
     public Note(String description) {
-        this.id = 0;
+        this.id = RealmNotesApplication.NoteID.incrementAndGet();
         this.description = description;
         this.createdAt = new Date();
     }
