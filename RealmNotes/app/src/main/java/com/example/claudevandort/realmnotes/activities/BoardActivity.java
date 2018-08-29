@@ -8,16 +8,23 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.claudevandort.realmnotes.R;
+import com.example.claudevandort.realmnotes.adapters.BoardAdapter;
 import com.example.claudevandort.realmnotes.models.Board;
 
 import io.realm.Realm;
+import io.realm.RealmChangeListener;
+import io.realm.RealmResults;
 
-public class BoardActivity extends AppCompatActivity {
+public class BoardActivity extends AppCompatActivity implements RealmChangeListener<RealmResults<Board>>{
     private Realm realm;
     private FloatingActionButton fab;
+    private ListView listViewBoard;
+    private BoardAdapter boardAdapter;
+    private RealmResults<Board> boards;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +32,12 @@ public class BoardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_board);
 
         realm = Realm.getDefaultInstance();
+        boards = realm.where(Board.class).findAll();
+        boards.addChangeListener(this);
+
+        boardAdapter = new BoardAdapter(this, boards, R.layout.list_view_board_item);
+        listViewBoard = findViewById(R.id.list_view_board);
+        listViewBoard.setAdapter(boardAdapter);
 
         fab = findViewById(R.id.fab_add_board);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -66,5 +79,10 @@ public class BoardActivity extends AppCompatActivity {
             }
         });
         builder.create().show();
+    }
+
+    @Override
+    public void onChange(RealmResults<Board> boards) {
+        boardAdapter.notifyDataSetChanged();
     }
 }
