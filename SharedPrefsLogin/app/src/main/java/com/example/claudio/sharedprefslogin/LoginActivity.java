@@ -1,6 +1,8 @@
 package com.example.claudio.sharedprefslogin;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -12,9 +14,11 @@ import android.widget.Switch;
 import android.widget.Toast;
 
 public class LoginActivity extends AppCompatActivity {
+    SharedPreferences prefs;
     private EditText editTextEmail, editTextPassword;
     private Switch switchRemember;
     private Button buttonLogin;
+    private String validEmail = "example@email.com", validPassword = "password";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,13 +26,21 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         bindUI();
+        prefs = getSharedPreferences("Preferences", Context.MODE_PRIVATE);
+        if(validStoredCredentials()){
+            editTextEmail.setText(prefs.getString("email", ""));
+            editTextPassword.setText(prefs.getString("password", ""));
+            switchRemember.setChecked(true);
+        }
 
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String email = editTextEmail.getText().toString(), password = editTextPassword.getText().toString();
-                if(login(email, password))
+                if(login(email, password)) {
                     goToMain();
+                    savePreference(email, password);
+                }
             }
         });
     }
@@ -55,16 +67,30 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private boolean isValidEmail(String email){
-        return !TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches();
+        return Patterns.EMAIL_ADDRESS.matcher(email).matches() && email.equals(validEmail);
     }
 
     private boolean isValidPassword(String password){
-        return password.length() >= 4;
+        return password.length() >= 4 && password.equals(validPassword);
     }
 
     private void goToMain(){
         Intent intent = new Intent(this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
+    }
+
+    private void savePreference(String email, String password){
+        if(switchRemember.isChecked()){
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putString("email", email);
+            editor.putString("password", password);
+            editor.apply();
+        }
+    }
+
+    private boolean validStoredCredentials(){
+        String storedEmail = prefs.getString("email", ""), storedPassword = prefs.getString("password", "");
+        return storedEmail.equals(validEmail) && storedPassword.equals(validPassword);
     }
 }
